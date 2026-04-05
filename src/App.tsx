@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import BottomNav from './components/BottomNav'
 import Alimentazione from './pages/Alimentazione'
 import Allenamento from './pages/Allenamento'
 import SessionePage from './pages/Allenamento/SessionePage'
 import Settings from './pages/Settings'
+import WorkoutPlanEditor from './pages/WorkoutPlanEditor'
 import './index.css'
 
 export default function App() {
@@ -23,10 +25,25 @@ export default function App() {
             <Route path="/allenamento" element={<Allenamento />} />
             <Route path="/allenamento/sessione/:sessionId" element={<SessionePage />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/scheda/:id" element={<WorkoutPlanEditor />} />
           </Routes>
         </main>
         <BottomNav />
       </div>
+
+      <Toaster
+        position="bottom-center"
+        offset={88}
+        toastOptions={{
+          style: {
+            backgroundColor: 'var(--color-surface-elevated)',
+            border: '1px solid var(--color-border)',
+            color: 'var(--color-text-primary)',
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: 13,
+          },
+        }}
+      />
     </BrowserRouter>
   )
 }
