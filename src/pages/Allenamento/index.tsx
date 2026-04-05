@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../../db'
 import WorkoutSessionCard from '../../components/WorkoutSessionCard'
+import ProgressiPage from './ProgressiPage'
 
 type Tab = 'sessioni' | 'progressi'
 
@@ -86,29 +87,7 @@ export default function Allenamento() {
           </>
         )}
 
-        {tab === 'progressi' && (
-          <div style={{
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center',
-            padding: '60px 0', gap: 12, textAlign: 'center',
-          }}>
-            <div style={{
-              width: 56, height: 56, borderRadius: 14,
-              backgroundColor: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 24,
-            }}>
-              📈
-            </div>
-            <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--color-text-primary)' }}>
-              Progressi
-            </p>
-            <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', maxWidth: 240 }}>
-              Grafici e statistiche disponibili nel prossimo aggiornamento.
-            </p>
-          </div>
-        )}
+        {tab === 'progressi' && <ProgressiPage />}
       </div>
     </div>
   )

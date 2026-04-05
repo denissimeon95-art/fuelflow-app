@@ -1,4 +1,330 @@
-import type { MealPlan, WorkoutPlan } from '../types'
+import type { MealPlan, WorkoutPlan, WorkoutLog } from '../types'
+
+// Returns ISO date string N days ago
+function dago(n: number): string {
+  const d = new Date()
+  d.setDate(d.getDate() - n)
+  return d.toISOString().split('T')[0]
+}
+
+// Build 4 sets with given weight and target reps
+function sets4(reps: number, weight: number) {
+  return [1,2,3,4].map(setNumber => ({ setNumber, reps, weight, unit: 'kg' as const }))
+}
+
+// ── 8 workout logs per session, spanning ~6 weeks ────────────────
+// Push A dates (every ~5-6 days): 41,35,30,25,20,15,9,4 days ago
+// Pull A: 40,34,29,24,19,14,8,3
+// Legs A: 38,33,28,22,17,12,7,2
+// Full Body: 36,31,26,20,15,10,5,1
+
+export function createMockWorkoutLogs(planId: number): Omit<WorkoutLog, 'id'>[] {
+  return [
+    // ── Push A ── (8 sessions)
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(41),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 70)   },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(10, 40)  },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 20)  },
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 10)  },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(35),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 72.5) },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(10, 42.5)},
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 22.5)},
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 10)  },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(30),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(9, 72.5) },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(10, 42.5)},
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 22.5)},
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 12.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(25),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 75)   },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(10, 45)  },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 25)  },
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 12.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(20),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 75)   },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(10, 45)  },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 25)  },
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 12.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(15),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 77.5) },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(9, 47.5) },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 27.5)},
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 15)  },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(9),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 80)   },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(9, 47.5) },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 27.5)},
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 15)  },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'push-a', sessionName: 'Push A', date: dago(4),
+      exerciseLogs: [
+        { exerciseId: 'push-a-1', exerciseName: 'Panca Piana',     sets: sets4(8, 82.5) },
+        { exerciseId: 'push-a-2', exerciseName: 'Shoulder Press',  sets: sets4(9, 50)   },
+        { exerciseId: 'push-a-3', exerciseName: 'Tricep Pushdown', sets: sets4(12, 30)  },
+        { exerciseId: 'push-a-4', exerciseName: 'Lateral Raise',   sets: sets4(15, 15)  },
+      ],
+    },
+
+    // ── Pull A ── (8 sessions)
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(40),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(7, 0)   },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 60)  },
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 30) },
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 15) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(34),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(8, 0)   },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 62.5)},
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 32.5)},
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 17.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(29),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(8, 0)   },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(9, 62.5)},
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 32.5)},
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 17.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(24),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(9, 0)   },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 65)  },
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 35) },
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 20) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(19),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(9, 5)   },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 65)  },
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 35) },
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 20) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(14),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(8, 10)  },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 67.5)},
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 37.5)},
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 22.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(8),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(8, 10)  },
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(9, 67.5)},
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 37.5)},
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 22.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'pull-a', sessionName: 'Pull A', date: dago(3),
+      exerciseLogs: [
+        { exerciseId: 'pull-a-1', exerciseName: 'Trazioni',            sets: sets4(8, 12.5)},
+        { exerciseId: 'pull-a-2', exerciseName: 'Rematore Bilanciere', sets: sets4(8, 70)  },
+        { exerciseId: 'pull-a-3', exerciseName: 'Curl Bilanciere',     sets: sets4(10, 40) },
+        { exerciseId: 'pull-a-4', exerciseName: 'Face Pull',           sets: sets4(15, 25) },
+      ],
+    },
+
+    // ── Legs A ── (8 sessions)
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(38),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 80)  },
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 140)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 60) },
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 35) },
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 40) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(33),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 82.5)},
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 145)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 62.5)},
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 37.5)},
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 42.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(28),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 85)  },
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 150)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 65) },
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 37.5)},
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 45) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(22),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 85)  },
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 150)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 65) },
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 40) },
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 45) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(17),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 87.5)},
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 155)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 67.5)},
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 40) },
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 47.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(12),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 90)  },
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 160)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 70) },
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 42.5)},
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 50) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(7),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(9, 90)  },
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 160)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 70) },
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 42.5)},
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 50) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'legs-a', sessionName: 'Legs A', date: dago(2),
+      exerciseLogs: [
+        { exerciseId: 'legs-a-1', exerciseName: 'Squat',             sets: sets4(8, 92.5)},
+        { exerciseId: 'legs-a-2', exerciseName: 'Leg Press',         sets: sets4(10, 165)},
+        { exerciseId: 'legs-a-3', exerciseName: 'Romanian Deadlift', sets: sets4(10, 72.5)},
+        { exerciseId: 'legs-a-4', exerciseName: 'Leg Curl',          sets: sets4(12, 45) },
+        { exerciseId: 'legs-a-5', exerciseName: 'Calf Raise',        sets: sets4(15, 52.5)},
+      ],
+    },
+
+    // ── Full Body ── (8 sessions)
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(36),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 100) },
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 50)  },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(8, 0)   },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 0)   },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(31),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 105) },
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 52.5)},
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(9, 0)   },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 5)   },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(26),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 107.5)},
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 52.5) },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 5)   },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 5)    },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(20),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 110) },
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 55)  },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 5)  },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 10)  },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(15),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 112.5)},
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 55)   },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 10)  },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 10)   },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(10),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 115) },
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 57.5)},
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 10) },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 12.5)},
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(5),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 117.5)},
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 57.5) },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 15)  },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(9, 12.5) },
+      ],
+    },
+    {
+      workoutPlanId: planId, sessionId: 'full-body', sessionName: 'Full Body', date: dago(1),
+      exerciseLogs: [
+        { exerciseId: 'fb-1', exerciseName: 'Stacco da Terra',  sets: sets4(6, 120) },
+        { exerciseId: 'fb-2', exerciseName: 'Military Press',   sets: sets4(8, 60)  },
+        { exerciseId: 'fb-3', exerciseName: 'Dip',              sets: sets4(10, 15) },
+        { exerciseId: 'fb-4', exerciseName: 'Chin Up',          sets: sets4(8, 15)  },
+      ],
+    },
+  ]
+}
 
 export const mockWorkoutPlan: Omit<WorkoutPlan, 'id'> = {
   name: 'Push Pull Legs — Massa',
