@@ -1,4 +1,155 @@
-import type { MealPlan } from '../types'
+import type { MealPlan, WorkoutPlan } from '../types'
+
+export const mockWorkoutPlan: Omit<WorkoutPlan, 'id'> = {
+  name: 'Push Pull Legs — Massa',
+  createdAt: new Date().toISOString(),
+  sessions: [
+    {
+      id: 'push-a',
+      name: 'Push A',
+      exercises: [
+        {
+          id: 'push-a-1',
+          name: 'Panca Piana',
+          muscleGroups: ['Pettorali', 'Deltoidi anteriori', 'Tricipiti'],
+          sets: 4, reps: '8-10',
+          notes: 'Presa larga, torace alto, scapole retratte',
+        },
+        {
+          id: 'push-a-2',
+          name: 'Shoulder Press',
+          muscleGroups: ['Deltoidi', 'Tricipiti', 'Trapezio'],
+          sets: 4, reps: '8-10',
+          notes: 'Manubri o bilanciere, non bloccare i gomiti in cima',
+        },
+        {
+          id: 'push-a-3',
+          name: 'Tricep Pushdown',
+          muscleGroups: ['Tricipiti'],
+          sets: 4, reps: '10-12',
+          notes: 'Cavo alto, gomiti fissi ai fianchi',
+        },
+        {
+          id: 'push-a-4',
+          name: 'Lateral Raise',
+          muscleGroups: ['Deltoidi laterali'],
+          sets: 4, reps: '12-15',
+          notes: 'Alzate laterali con manubri, gomiti leggermente flessi',
+        },
+      ],
+    },
+    {
+      id: 'pull-a',
+      name: 'Pull A',
+      exercises: [
+        {
+          id: 'pull-a-1',
+          name: 'Trazioni',
+          muscleGroups: ['Dorsali', 'Bicipiti', 'Romboidi'],
+          sets: 4, reps: '6-10',
+          notes: 'Presa prona larga, mento sopra la sbarra',
+        },
+        {
+          id: 'pull-a-2',
+          name: 'Rematore Bilanciere',
+          muscleGroups: ['Dorsali', 'Romboidi', 'Trapezio', 'Bicipiti'],
+          sets: 4, reps: '8-10',
+          notes: 'Busto a 45°, tirare verso l\'ombelico',
+        },
+        {
+          id: 'pull-a-3',
+          name: 'Curl Bilanciere',
+          muscleGroups: ['Bicipiti', 'Brachiale'],
+          sets: 4, reps: '10-12',
+          notes: 'Gomiti fissi, niente oscillazione del busto',
+        },
+        {
+          id: 'pull-a-4',
+          name: 'Face Pull',
+          muscleGroups: ['Deltoidi posteriori', 'Romboidi', 'Trapezio'],
+          sets: 4, reps: '15-20',
+          notes: 'Cavo all\'altezza del viso, pull verso la fronte',
+        },
+      ],
+    },
+    {
+      id: 'legs-a',
+      name: 'Legs A',
+      exercises: [
+        {
+          id: 'legs-a-1',
+          name: 'Squat',
+          muscleGroups: ['Quadricipiti', 'Glutei', 'Femorali', 'Core'],
+          sets: 4, reps: '8-10',
+          notes: 'Scendere a profondità parallela, ginocchia sui piedi',
+        },
+        {
+          id: 'legs-a-2',
+          name: 'Leg Press',
+          muscleGroups: ['Quadricipiti', 'Glutei', 'Femorali'],
+          sets: 4, reps: '10-12',
+          notes: 'Piedi a larghezza spalle, non bloccare le ginocchia',
+        },
+        {
+          id: 'legs-a-3',
+          name: 'Romanian Deadlift',
+          muscleGroups: ['Femorali', 'Glutei', 'Lombari'],
+          sets: 4, reps: '10-12',
+          notes: 'Schiena neutra, scendere fino a sentire lo stretch',
+        },
+        {
+          id: 'legs-a-4',
+          name: 'Leg Curl',
+          muscleGroups: ['Femorali', 'Bicipite femorale'],
+          sets: 4, reps: '12-15',
+          notes: 'Contrazione completa, movimento controllato in negativa',
+        },
+        {
+          id: 'legs-a-5',
+          name: 'Calf Raise',
+          muscleGroups: ['Gastrocnemio', 'Soleo'],
+          sets: 4, reps: '15-20',
+          notes: 'Range completo, pausa in cima e in basso',
+        },
+      ],
+    },
+    {
+      id: 'full-body',
+      name: 'Full Body',
+      exercises: [
+        {
+          id: 'fb-1',
+          name: 'Stacco da Terra',
+          muscleGroups: ['Femorali', 'Glutei', 'Dorsali', 'Trapezio', 'Core'],
+          sets: 4, reps: '6-8',
+          notes: 'Schiena neutra, testa in linea, spingere il pavimento',
+        },
+        {
+          id: 'fb-2',
+          name: 'Military Press',
+          muscleGroups: ['Deltoidi', 'Tricipiti', 'Core'],
+          sets: 4, reps: '8-10',
+          notes: 'Bilanciere davanti, core contratto, no iperestensione lombare',
+        },
+        {
+          id: 'fb-3',
+          name: 'Dip',
+          muscleGroups: ['Pettorali', 'Tricipiti', 'Deltoidi anteriori'],
+          sets: 4, reps: '8-12',
+          notes: 'Busto leggermente inclinato per i pettorali',
+        },
+        {
+          id: 'fb-4',
+          name: 'Chin Up',
+          muscleGroups: ['Dorsali', 'Bicipiti', 'Romboidi'],
+          sets: 4, reps: '6-10',
+          notes: 'Presa supina, tirare i gomiti verso i fianchi',
+        },
+      ],
+    },
+  ],
+}
+
 
 export const mockMealPlan: Omit<MealPlan, 'id'> = {
   name: 'Piano Performance — Massa',

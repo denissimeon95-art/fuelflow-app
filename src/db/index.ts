@@ -10,10 +10,10 @@ class FuelFlowDB extends Dexie {
   constructor() {
     super('FuelFlowDB')
     this.version(1).stores({
-      mealPlans: '++id, name, createdAt',
+      mealPlans:    '++id, name, createdAt',
       workoutPlans: '++id, name, createdAt',
-      workoutLogs: '++id, workoutPlanId, sessionId, date',
-      appSettings: '++id, &key',
+      workoutLogs:  '++id, workoutPlanId, sessionId, date, [workoutPlanId+sessionId+date]',
+      appSettings:  '++id, &key',
     })
   }
 }
