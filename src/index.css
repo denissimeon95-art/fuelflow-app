@@ -41,3 +41,30 @@ body,
   background: var(--color-border);
   border-radius: 2px;
 }
+
+/* ── Skeleton pulse animation ───────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Page fade-in transition ────────────────────────────── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+  animation: page-enter 200ms ease-out both;
+}
+
+/* ── Tap highlight suppression ──────────────────────────── */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Smooth scroll everywhere ───────────────────────────── */
+* {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}

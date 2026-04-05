@@ -3,8 +3,8 @@ import { ForkKnife, Barbell, Gear } from '@phosphor-icons/react'
 
 const tabs = [
   { to: '/alimentazione', label: 'Alimentazione', Icon: ForkKnife },
-  { to: '/allenamento', label: 'Allenamento', Icon: Barbell },
-  { to: '/settings', label: 'Settings', Icon: Gear },
+  { to: '/allenamento',   label: 'Allenamento',   Icon: Barbell  },
+  { to: '/settings',      label: 'Settings',      Icon: Gear     },
 ]
 
 export default function BottomNav() {
@@ -15,13 +15,15 @@ export default function BottomNav() {
         bottom: 0,
         left: 0,
         right: 0,
-        height: 64,
+        // Safe area for iPhone notch / home indicator
+        paddingBottom: 'env(safe-area-inset-bottom)',
         backgroundColor: 'var(--color-surface)',
         borderTop: '1px solid var(--color-border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
         zIndex: 50,
+        minHeight: 64,
       }}
     >
       {tabs.map(({ to, label, Icon }) => (
@@ -34,13 +36,15 @@ export default function BottomNav() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: 4,
-            minWidth: 44,
+            minWidth: 64,
             minHeight: 44,
+            padding: '8px 12px',
             color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)',
             textDecoration: 'none',
             fontSize: 11,
             fontWeight: 500,
             transition: 'color 0.15s ease',
+            WebkitTapHighlightColor: 'transparent',
           })}
         >
           <Icon size={24} weight="regular" />

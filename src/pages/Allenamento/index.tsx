@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../../db'
 import WorkoutSessionCard from '../../components/WorkoutSessionCard'
 import ProgressiPage from './ProgressiPage'
+import { CardSkeleton } from '../../components/Skeleton'
 
 type Tab = 'sessioni' | 'progressi'
 
@@ -59,9 +60,13 @@ export default function Allenamento() {
       <div style={{ padding: '0 20px 20px' }}>
         {tab === 'sessioni' && (
           <>
-            {!planData ? (
+            {planData === undefined ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[1,2,3].map(i => <CardSkeleton key={i} height={100} />)}
+              </div>
+            ) : !planData ? (
               <p style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>
-                Caricamento…
+                Nessuna scheda attiva. Creane una in Settings.
               </p>
             ) : (
               <>

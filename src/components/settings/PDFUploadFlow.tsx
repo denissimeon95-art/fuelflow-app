@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist'
 import { toast } from 'sonner'
+import { useOnline } from '../../hooks/useOnline'
 import {
   FilePdf,
   SpinnerGap,
@@ -126,6 +127,7 @@ interface Props {
 }
 
 export default function PDFUploadFlow({ onClose }: Props) {
+  const online = useOnline()
   const [step, setStep] = useState<Step>('upload')
   const [dragOver, setDragOver] = useState(false)
   const [parsedPlan, setParsedPlan] = useState<MealPlan | null>(null)
@@ -135,6 +137,10 @@ export default function PDFUploadFlow({ onClose }: Props) {
   async function processFile(file: File) {
     if (!file.name.toLowerCase().endsWith('.pdf')) {
       toast.error('Seleziona un file PDF')
+      return
+    }
+    if (!online) {
+      toast.error('Connessione necessaria per analizzare il PDF con Claude')
       return
     }
     setStep('parsing')

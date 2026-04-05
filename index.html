@@ -1,10 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fuelflow-app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- App identity -->
+    <title>FuelFlow</title>
+    <meta name="description" content="Il tuo tracker di alimentazione e allenamento" />
+    <meta name="application-name" content="FuelFlow" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#0F0F11" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FuelFlow" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+
+    <!-- Splash screen background for iOS -->
+    <style>
+      html { background-color: #0F0F11; }
+    </style>
   </head>
   <body>
     <div id="root"></div>

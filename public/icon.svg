@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0F0F11"/>
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#A8E063" stroke-width="16" opacity="0.2"/>
+  <!-- Fuel drop shape -->
+  <path d="M256 96 C256 96 152 192 152 288 C152 344 198 400 256 400 C314 400 360 344 360 288 C360 192 256 96 256 96Z" fill="#A8E063"/>
+  <!-- Inner dark drop (highlight) -->
+  <path d="M256 160 C256 160 196 228 196 288 C196 320 224 350 256 350 C288 350 316 320 316 288 C316 228 256 160 256 160Z" fill="#0F0F11" opacity="0.55"/>
+  <!-- Top spark dot -->
+  <circle cx="256" cy="116" r="14" fill="#A8E063"/>
+</svg>

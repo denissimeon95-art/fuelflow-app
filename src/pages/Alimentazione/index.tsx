@@ -5,6 +5,7 @@ import type { Meal, MealPlan, DayPlan } from '../../types'
 import MealCard from '../../components/MealCard'
 import MealDetailSheet from '../../components/MealDetailSheet'
 import EmptyState from '../../components/EmptyState'
+import { MealCardSkeleton, Skeleton } from '../../components/Skeleton'
 
 // ── helpers ───────────────────────────────────────────────────────
 
@@ -73,7 +74,22 @@ export default function Alimentazione() {
   }, [activePlan?.id])
 
   if (activeIdSetting === undefined || activePlan === undefined) {
-    return <div style={{ padding: 24, color: 'var(--color-text-secondary)', fontSize: 14 }}>Caricamento…</div>
+    return (
+      <div style={{ padding: '20px 20px 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <Skeleton width={160} height={26} radius={6} />
+          <Skeleton width={70} height={14} radius={4} />
+        </div>
+        <Skeleton width="100%" height={60} radius={12} style={{ marginBottom: 12 }} />
+        <Skeleton width="100%" height={66} radius={12} style={{ marginBottom: 16 }} />
+        <div style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
+          {[1,2,3,4,5].map(i => <Skeleton key={i} height={36} radius={8} style={{ flex: 1 }} />)}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {[1,2,3,4].map(i => <MealCardSkeleton key={i} />)}
+        </div>
+      </div>
+    )
   }
   if (!activePlan) return <EmptyState />
 
