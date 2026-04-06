@@ -61,11 +61,30 @@ async function parsePlanWithClaude(rawText: string): Promise<MealPlan> {
   const data = await response.json()
   const text = data.content?.[0]?.text ?? ''
 
+  let parsed: any
   try {
-    return JSON.parse(text) as MealPlan
+    parsed = JSON.parse(text)
   } catch {
     throw new Error(`JSON non valido:\n${text}`)
   }
+
+  // Normalize days: Claude sometimes returns an object instead of an array
+  if (parsed?.days && !Array.isArray(parsed.days)) {
+    parsed.days = Object.values(parsed.days)
+  }
+
+  if (!Array.isArray(parsed?.days) || parsed.days.length === 0) {
+    throw new Error('Piano non valido: nessun giorno estratto. Riprova.')
+  }
+
+  // Ensure meals inside each day is also an array
+  for (const day of parsed.days) {
+    if (!Array.isArray(day.meals)) {
+      day.meals = day.meals ? Object.values(day.meals) : []
+    }
+  }
+
+  return parsed as MealPlan
 }
 
 // ── sub-components ─────────────────────────────────────────────────
@@ -158,10 +177,19 @@ export default function PDFUploadFlow({ onClose }: Props) {
 
   async function handleConfirm() {
     if (!parsedPlan) return
-    const id = await db.mealPlans.add(parsedPlan as Parameters<typeof db.mealPlans.add>[0])
-    await db.appSettings.put({ key: 'activeMealPlanId', value: String(id) })
-    toast.success('Piano salvato e impostato come attivo')
-    onClose()
+    try {
+      const id = await db.mealPlans.add(parsedPlan as Parameters<typeof db.mealPlans.add>[0])
+      const existing = await db.appSettings.where('key').equals('activeMealPlanId').first()
+      await db.appSettings.put({
+        ...(existing ? { id: existing.id } : {}),
+        key: 'activeMealPlanId',
+        value: String(id),
+      })
+      toast.success('Piano salvato e impostato come attivo')
+      onClose()
+    } catch (err: any) {
+      toast.error(err.message ?? 'Errore durante il salvataggio')
+    }
   }
 
   // ── Step 1: Upload ─────────────────────────────────────────────
