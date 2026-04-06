@@ -7,7 +7,7 @@ import {
   TouchSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
+  type DragEndEvent,
 } from '@dnd-kit/core'
 import {
   SortableContext,
@@ -306,7 +306,11 @@ export default function WorkoutPlanEditor() {
       const newId = await db.workoutPlans.add(plan as Parameters<typeof db.workoutPlans.add>[0])
       await db.appSettings.put({ key: 'activeWorkoutPlanId', value: String(newId) })
     } else {
-      await db.workoutPlans.update(Number(id), plan)
+      await db.workoutPlans.update(Number(id), {
+        name: plan.name,
+        createdAt: plan.createdAt,
+        sessions: plan.sessions,
+      })
     }
 
     toast.success(isNew ? 'Scheda creata e impostata come attiva' : 'Scheda aggiornata')
