@@ -46,7 +46,7 @@ async function parsePlanWithClaude(rawText: string): Promise<MealPlan> {
       'anthropic-dangerous-direct-browser-access': 'true',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-opus-4-6',
       max_tokens: 4000,
       system: `Sei un assistente che estrae piani alimentari da testo. Rispondi SOLO con JSON valido, senza markdown, senza backtick, senza testo aggiuntivo. Schema richiesto: { name: string, cycleLength: 5, days: [{ dayNumber: number, meals: [{ id: string, name: string, timeOfDay: "colazione"|"pranzo"|"cena"|"spuntino", alternatives: [{ id: string, foods: [{ name: string, quantity: number, unit: string, calories?: number, protein?: number, carbs?: number, fat?: number }] }] }] }] }`,
       messages: [{ role: 'user', content: rawText }],
@@ -165,6 +165,9 @@ export default function PDFUploadFlow({ onClose }: Props) {
     setStep('parsing')
     try {
       const text = await extractTextFromPDF(file)
+      if (!text.trim()) {
+        throw new Error('Il PDF non contiene testo leggibile. Assicurati che non sia un PDF scansionato.')
+      }
       setRawText(text)
       const plan = await parsePlanWithClaude(text)
       setParsedPlan({ ...plan, createdAt: new Date().toISOString(), cycleStartDate: new Date().toISOString().split('T')[0] })
